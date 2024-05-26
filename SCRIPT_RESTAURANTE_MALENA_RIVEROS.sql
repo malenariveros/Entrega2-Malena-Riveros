@@ -168,7 +168,10 @@ ADD cantidad_bebidas INT;
 ALTER TABLE detalle_comandas
 ADD cantidad_postres INT;
 
+<<<<<<< HEAD
+=======
 DESCRIBE detalle_comandas;
+>>>>>>> db72259acbfc7b36236e82a167768894ceb36e53
 
 
 CREATE TABLE facturas_clientes (
@@ -314,6 +317,10 @@ CREATE TABLE ventas (
     fecha DATE NOT NULL
 );
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> db72259acbfc7b36236e82a167768894ceb36e53
 CREATE TABLE detalle_ventas (
     id_detalle INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_ventas INT NOT NULL,
@@ -329,6 +336,42 @@ CREATE TABLE detalle_ventas (
     FOREIGN KEY (id_menu) REFERENCES menu(id_menu)
 );
 
+<<<<<<< HEAD
+ALTER TABLE detalle_ventas
+DROP cantidad;
+
+ALTER TABLE detalle_ventas
+ADD CONSTRAINT fk_detalle_comandas_detalle_ventas_platos FOREIGN KEY (id_platos) REFERENCES detalle_comandas(id_platos),
+ADD CONSTRAINT fk_detalle_comandas_detalle_ventas_bebidas FOREIGN KEY (id_bebidas) REFERENCES detalle_comandas(id_bebidas),
+ADD CONSTRAINT fk_detalle_comandas_detalle_ventas_postres FOREIGN KEY (id_postres) REFERENCES detalle_comandas(id_postres),
+ADD CONSTRAINT fk_detalle_comandas_detalle_ventas_menu FOREIGN KEY (id_menu) REFERENCES detalle_comandas(id_menu);
+
+-- Eliminar la tabla detalle_ventas si existe
+DROP TABLE IF EXISTS detalle_ventas;
+
+-- Crear la tabla detalle_ventas desde cero con todas las restricciones
+CREATE TABLE detalle_ventas (
+    id_detalle INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_ventas INT NOT NULL,
+    id_platos INT,
+    id_bebidas INT,
+    id_postres INT,
+    id_menu INT,
+    cantidad_platos_vendidos INT,
+    cantidad_bebidas_vendidas INT,
+    cantidad_postres_vendidos INT,
+    cantidad_menu_pasos_vendidos INT,
+    FOREIGN KEY (id_ventas) REFERENCES ventas(id_ventas),
+    FOREIGN KEY (id_platos) REFERENCES platos(id_platos),
+    FOREIGN KEY (id_bebidas) REFERENCES bebidas(id_bebidas),
+    FOREIGN KEY (id_postres) REFERENCES postres(id_postres),
+    FOREIGN KEY (id_menu) REFERENCES menu(id_menu),
+    CONSTRAINT fk_detalle_comandas_detalle_ventas_platos FOREIGN KEY (id_platos) REFERENCES detalle_comandas(id_platos),
+    CONSTRAINT fk_detalle_comandas_detalle_ventas_bebidas FOREIGN KEY (id_bebidas) REFERENCES detalle_comandas(id_bebidas),
+    CONSTRAINT fk_detalle_comandas_detalle_ventas_postres FOREIGN KEY (id_postres) REFERENCES detalle_comandas(id_postres),
+    CONSTRAINT fk_detalle_comandas_detalle_ventas_menu FOREIGN KEY (id_menu) REFERENCES detalle_comandas(id_menu)
+);
+=======
 
 
 -- inserción de datos para las tablas platos y postres.
@@ -416,10 +459,29 @@ VALUES 	('2024-05-17', 2, '12:30:00','1'),
 		('2024-07-15', 5, '18:30:00', '1'),
 		('2024-07-20', 2, '20:15:00', '8'),
 		('2024-07-25', 4, '08:30:00', '3');
+>>>>>>> db72259acbfc7b36236e82a167768894ceb36e53
 
 
 
 
+<<<<<<< HEAD
+-- creamos una vista que nos permita ver las resvar del día, hechas por los clientes.
+
+DROP VIEW IF EXISTS vista_ventas_diarias;
+CREATE OR REPLACE VIEW vista_ventas_diarias AS
+SELECT 
+    fecha, 
+    COUNT(id_ventas) AS total_ventas
+FROM 
+    ventas
+GROUP BY 
+    fecha
+ORDER BY 
+    fecha;
+
+
+SELECT * FROM vista_ventas_diarias;
+=======
 
 -- Insert de datos en la tabla comandas.
 INSERT INTO comandas(id_comandas, hora, fecha, id_mesas)
@@ -746,6 +808,7 @@ GROUP BY r.id_reservas, r.hora, r.fecha, r.cantidad_pax, c.nombre, c.apellido;
 
 SELECT * FROM vista_reservas_diarias LIMIT 0, 1000;
 
+>>>>>>> db72259acbfc7b36236e82a167768894ceb36e53
 
 -- creamos una vista que nos de el estado de las mesas. 
 
@@ -778,6 +841,8 @@ WHERE f.pagada = 0;
 SELECT * FROM vista_facturas_pendientes;
 
 
+<<<<<<< HEAD
+=======
 -- creamos una vista para las ventas diarias.
 
 CREATE VIEW vista_ventas_diarias AS
@@ -794,6 +859,7 @@ GROUP BY v.fecha;
 
 SELECT * FROM vista_ventas_diarias;
 
+>>>>>>> db72259acbfc7b36236e82a167768894ceb36e53
 -- creamos una vista que nos diga los empleados por turno.
 
 CREATE VIEW vista_empleados_por_turno AS
